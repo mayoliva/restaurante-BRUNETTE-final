@@ -1,0 +1,5 @@
+Cliente: santino
+Fecha: 2026-02-17 16:33
+Productos:
+pizza napolitana x 1
+Total: 50000.00

@@ -1,0 +1,5 @@
+Cliente: pepe
+Fecha: 2026-02-17 16:25
+Productos:
+Milanesa Napolitana x 1
+Total: 18000.00

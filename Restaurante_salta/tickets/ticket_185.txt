@@ -1,0 +1,5 @@
+Cliente: pepe
+Fecha: 2026-02-17 16:33
+Productos:
+sprite x 1
+Total: 2500.00
