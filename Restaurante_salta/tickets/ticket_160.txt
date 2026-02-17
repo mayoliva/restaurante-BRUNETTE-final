@@ -1,0 +1,5 @@
+Cliente: agustin
+Fecha: 2025-03-13 16:55
+Productos:
+Milanesa Napolitana x 1
+Total: 18000.00

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Pedido</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'ventas/css/estilos.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- Se agregó el namespace 'ventas:' -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ventas:lista_ventas' %}">Lista de Ventas</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-3" style="max-width: 300px;">
+        <h2 class="text-center mb-3">Crear Pedido</h2>
+        {% if messages %}
+        <div class="alert alert-info" role="alert">
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <form method="post" class="mb-3">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="customer_name">Nombre del Cliente:</label> <!-- Campo añadido -->
+                <input type="text" name="customer_name" id="customer_name" class="form-control form-control-sm"
+                    value="{{ request.session.customer_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="producto">Producto:</label>
+                <select name="producto" id="producto" class="form-control form-control-sm">
+                    {% for producto in productos %}
+                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad" class="form-control form-control-sm" min="1"
+                    value="1">
+            </div>
+            <button type="submit" name="añadir_al_carrito" class="btn btn-primary btn-sm">Añadir al Carrito</button>
+        </form>
+
+        <h3 class="mb-3">Carrito</h3>
+        <ul class="list-group mb-3">
+            {% for producto_id, detalles in carrito.items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ detalles.nombre }}</span>
+                <form method="post" class="ml-2">
+                    {% csrf_token %}
+                    <input type="hidden" name="producto_id" value="{{ producto_id }}">
+                    <button type="submit" name="borrar_producto" class="btn btn-danger btn-sm">Borrar</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total Carrito: ${{ total_carrito|floatformat:2 }}</strong></p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="metodo_pago">Método de Pago:</label>
+                <select name="metodo_pago" id="metodo_pago" class="form-control form-control-sm">
+                    <option value="efectivo">Efectivo</option>
+                    <option value="transferencia">Transferencia</option>
+                </select>
+            </div>
+            <button type="submit" name="confirmar_pedido" class="btn btn-success btn-sm">Confirmar Pedido</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

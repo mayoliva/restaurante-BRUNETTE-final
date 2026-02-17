@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Ventas</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 45%;
+            height: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+    </nav>
+    <div class="container mt-5 pt-5">
+        <h1 class="display-4 text-center mb-4">Estadísticas de Ventas</h1>
+
+        <!-- Formulario de Filtro de Fecha -->
+        <form method="get" class="form-inline justify-content-center mb-4">
+            <div class="form-group mr-2">
+                <label for="fecha_inicio" class="sr-only">Fecha Inicio</label>
+                <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control"
+                    value="{{ fecha_inicio }}">
+            </div>
+            <div class="form-group mr-2">
+                <label for="fecha_fin" class="sr-only">Fecha Fin</label>
+                <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" value="{{ fecha_fin }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+
+        <!-- Gráfico de Ingresos por Fecha -->
+        <div class="chart-container mb-4">
+            <h2 class="text-center">Ingresos por Fecha</h2>
+            <canvas id="ingresosPorFechaChart"></canvas>
+        </div>
+
+        <!-- Gráfico de Métodos de Pago -->
+        <div class="chart-container mb-4">
+            <h2 class="text-center">Métodos de Pago</h2>
+            <canvas id="metodosDePagoChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Datos para el gráfico de Ingresos por Fecha
+        const ingresosPorFechaLabels = JSON.parse('{{ ingresos_por_fecha_labels|escapejs }}');
+        const ingresosPorFechaData = JSON.parse('{{ ingresos_por_fecha_data|escapejs }}');
+
+        // Configuración del gráfico de Ingresos por Fecha
+        const ingresosPorFechaCtx = document.getElementById('ingresosPorFechaChart').getContext('2d');
+        new Chart(ingresosPorFechaCtx, {
+            type: 'line',
+            data: {
+                labels: ingresosPorFechaLabels,
+                datasets: [{
+                    label: 'Ingresos',
+                    data: ingresosPorFechaData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Datos para el gráfico de Métodos de Pago
+        const metodosDePagoLabels = JSON.parse('{{ metodos_de_pago_labels|escapejs }}');
+        const metodosDePagoData = JSON.parse('{{ metodos_de_pago_data|escapejs }}');
+
+        // Configuración del gráfico de Métodos de Pago
+        const metodosDePagoCtx = document.getElementById('metodosDePagoChart').getContext('2d');
+        new Chart(metodosDePagoCtx, {
+            type: 'pie',
+            data: {
+                labels: metodosDePagoLabels,
+                datasets: [{
+                    data: metodosDePagoData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+</body>
+
+</html>

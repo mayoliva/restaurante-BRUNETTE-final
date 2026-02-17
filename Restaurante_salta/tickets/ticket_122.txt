@@ -1,0 +1,6 @@
+Cliente: pepe argento
+Fecha: 2025-02-27 15:51
+Productos:
+Milanesa Napolitana x 1
+sanwi de mila x 1
+Total: 20000.00

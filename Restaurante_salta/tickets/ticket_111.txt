@@ -1,0 +1,5 @@
+Cliente: pipi
+Fecha: 2025-02-27 01:28
+Productos:
+sprite x 1
+Total: 2500.00

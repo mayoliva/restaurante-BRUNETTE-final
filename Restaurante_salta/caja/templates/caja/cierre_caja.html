@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cierre de Caja</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+    </nav>
+    <div class="container mt-5 pt-5" style="max-width: 600px;">
+        <h1 class="display-4 mb-4">Cierre de Caja</h1>
+        <h2 class="lead">Caja: {{ caja.nombre }}</h2>
+        <p class="lead">Usuario: {{ caja.usuario.username }}</p>
+        <p class="lead">Saldo Inicial: ${{ caja.saldo_inicial }}</p>
+        <p class="lead">Total Ventas: ${{ total_ventas }}</p>
+        <p class="lead">Saldo Final: ${{ saldo_final }}</p>
+        <p class="lead">Fecha de Cierre: {{ caja.fecha_cierre|date:"d/m/Y H:i" }}</p>
+
+        <h2 class="mt-4">Transacciones de Caja</h2>
+        <ul class="list-group mb-4">
+            {% for transaccion in caja.transaction_set.all %}
+            <li class="list-group-item">
+                <strong>Fecha y Hora:</strong> {{ transaccion.created_at|date:"d/m/Y H:i" }}<br>
+                <strong>Monto:</strong> ${{ transaccion.amount }}<br>
+                <strong>Tipo de Transacción:</strong> {{ transaccion.transaction_type }}<br>
+                <strong>Usuario:</strong> {{ transaccion.user.username }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'caja:apertura_caja' %}" class="btn btn-primary mb-3">Volver a la apertura de caja</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

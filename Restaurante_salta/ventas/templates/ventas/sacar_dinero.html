@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sacar Dinero</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+    </nav>
+    <div class="container mt-3">
+        <h2 class="text-center mb-3">Sacar Dinero</h2>
+        {% if messages %}
+        <div class="alert alert-info" role="alert">
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-danger">Registrar Egreso</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Ventas</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'ventas/css/estilos.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            color: #000;
+            /* Color negro fuerte para todas las letras */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+    </nav>
+    <div class="container mt-3">
+        <h2 class="text-center mb-3">Lista de Ventas</h2>
+
+        <!-- Sección de mensajes -->
+        {% if messages %}
+        <div class="alert alert-info" role="alert">
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Mostrar funcionalidades adicionales solo si no es una caja cerrada -->
+        {% if not es_caja_cerrada %}
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{% url 'ventas:crear_venta' %}" class="btn btn-primary btn-sm">Crear Nuevo Pedido</a>
+            <!-- Botones de ingreso y egreso -->
+            <div>
+                <a href="{% url 'ventas:ingresar_dinero' %}" class="btn btn-success btn-sm">Ingresar Dinero</a>
+                <a href="{% url 'ventas:sacar_dinero' %}" class="btn btn-danger btn-sm">Sacar Dinero</a>
+                <!-- Ícono de campana -->
+                <button id="notificationBell" class="btn btn-outline-secondary btn-sm">
+                    <span class="glyphicon glyphicon-bell"></span> Notificaciones
+                </button>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <form method="get" class="form-inline mb-3">
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="fecha" class="sr-only">Fecha</label>
+                <input type="date" name="fecha" id="fecha" class="form-control form-control-sm"
+                    value="{{ request.GET.fecha }}">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="nombre" class="sr-only">Nombre del Cliente</label>
+                <input type="text" name="nombre" id="nombre" class="form-control form-control-sm"
+                    placeholder="Nombre del Cliente" value="{{ request.GET.nombre }}">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Filtrar</button>
+        </form>
+        {% endif %}
+
+        <div id="notifications" style="display: none;">
+            <h4>Pedidos Completados</h4>
+            <ul class="list-group">
+                {% for pedido in pedidos_completados %}
+                <li class="list-group-item">{{ pedido.customer_name }} - Orden #{{ pedido.id }}</li>
+                {% empty %}
+                <li class="list-group-item">No hay pedidos completados.</li>
+                {% endfor %}
+            </ul>
+            <h4>Pedidos en Espera</h4>
+            <ul class="list-group">
+                {% for pedido in pedidos_espera %}
+                <li class="list-group-item">{{ pedido.customer_name }} - Orden #{{ pedido.id }}</li>
+                {% empty %}
+                <li class="list-group-item">No hay pedidos en espera.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre del Cliente</th>
+                    <th>Fecha</th>
+                    <th>Productos</th>
+                    <th>Estado Pedido</th>
+                    <th>Estado Facturación</th>
+                    <th>Tipo de Pago</th>
+                    <th>Total</th>
+                    {% if not es_caja_cerrada %}
+                    <th>Acciones</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.customer_name }}</td>
+                    <td>{{ venta.fecha_venta|date:"d/m/Y" }}</td>
+                    <td>
+                        <ul>
+                            {% for vp in venta.ventaproducto_set.all %}
+                            <li>{{ vp.producto.nombre }} x {{ vp.cantidad }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td><span class="badge badge-warning">{{ venta.estado_pedido }}</span></td>
+                    <td><span class="badge badge-warning">{{ venta.estado_facturacion }}</span></td>
+                    <td><span class="badge badge-light">{{ venta.tipo_pago }}</span></td>
+                    <td>${{ venta.total|floatformat:2 }}</td>
+                    {% if not es_caja_cerrada %}
+                    <td>
+                        {% if venta.estado_facturacion == 'Sin facturar' %}
+                        <div class="btn-group" role="group">
+                            <form method="post" action="{% url 'ventas:marcar_pagado' venta.pk %}"
+                                style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success btn-sm">Facturar</button>
+                            </form>
+                            <a href="{% url 'ventas:eliminar_venta' venta.pk %}"
+                                class="btn btn-danger btn-sm ml-1">Eliminar</a>
+                        </div>
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('notificationBell').addEventListener('click', function () {
+            var notifications = document.getElementById('notifications');
+            if (notifications.style.display === 'none') {
+                notifications.style.display = 'block';
+            } else {
+                notifications.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

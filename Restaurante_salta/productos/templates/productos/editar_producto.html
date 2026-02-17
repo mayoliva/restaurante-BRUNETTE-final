@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Producto</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Enlace a tu hoja de estilos personalizada -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'productos/css/estilos.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+    </nav>
+    <!-- Contenedor principal con margen superior reducido -->
+    <div class="container mt-3 contenido-centrado">
+        <!-- Encabezado -->
+        <header class="mb-4 text-center">
+            <h1 class="font-weight-bold">Editar Producto</h1>
+            <!-- Aquí es donde puedes añadir tu imagen -->
+            <img src="{% static 'productos/img/lgo.png' %}" alt="" class="img-fluid my-3 imagen-ajustada">
+        </header>
+
+        <!-- Formulario de edición con fondo gris claro -->
+        <div class="mx-auto p-4" id="formulario-contenedor" style="max-width: 500px;">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Campos del formulario -->
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    <!-- Ajusta el campo de descripción -->
+                    {% if field.name == "descripcion" %}
+                    <textarea class="form-control" name="descripcion" rows="1">{{ field.value }}</textarea>
+                    {% else %}
+                    {{ field }}
+                    {% endif %}
+                    {{ field.errors }}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+                <a href="{% url 'productos:lista_productos' %}" class="btn btn-link btn-block">Volver a la lista</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Enlaces a los scripts de Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

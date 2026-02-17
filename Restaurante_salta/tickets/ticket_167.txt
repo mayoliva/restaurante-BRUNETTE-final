@@ -1,0 +1,5 @@
+Cliente: pepe
+Fecha: 2025-04-03 19:25
+Productos:
+nuevo x 1
+Total: 10000.00

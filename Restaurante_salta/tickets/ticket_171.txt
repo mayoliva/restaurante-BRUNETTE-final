@@ -1,0 +1,6 @@
+Cliente: sergei
+Fecha: 2025-04-04 17:34
+Productos:
+Milanesa Napolitana x 1
+sanwi de mila x 1
+Total: 20000.00

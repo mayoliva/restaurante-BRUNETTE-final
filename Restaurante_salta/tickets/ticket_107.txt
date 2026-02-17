@@ -1,0 +1,5 @@
+Cliente: pablo
+Fecha: 2025-02-26 15:15
+Productos:
+sprite x 1
+Total: 2500.00

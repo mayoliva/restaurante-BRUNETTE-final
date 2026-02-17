@@ -1,0 +1,5 @@
+Cliente: gonzalo
+Fecha: 2025-02-23 22:18
+Productos:
+hamburguesa completa x 7
+Total: 63000.00

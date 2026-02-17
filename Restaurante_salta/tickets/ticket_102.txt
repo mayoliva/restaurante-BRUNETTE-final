@@ -1,0 +1,6 @@
+Cliente: gonzalo
+Fecha: 2025-02-25 00:28
+Productos:
+7up x 3
+hamburguesa completa x 1
+Total: 15000.00

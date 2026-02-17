@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <form id="logout-form" action="{% url 'usuarios:cerrar_sesion' %}" method="post"
+                        style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link" style="color: white;">Cerrar Sesión</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5 pt-5 text-center" style="max-width: 500px;">
+        <!-- Mostrar mensajes de error -->
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- Fin de mensajes de error -->
+        <img src="{% static 'img/logo.png' %}" alt="Imagen del menú" class="menu-img mb-4"
+            style="max-width: 200px; height: auto;">
+        <ul class="list-group">
+            {% if request.user.rol == 'ADMIN' %}
+            <!-- Botones visibles para Administrador -->
+            <li class="list-group-item text-center">
+                <a href="{% url 'caja:apertura_caja' %}" class="btn btn-success btn-lg">Apertura de Caja</a>
+            </li>
+            <li class="list-group-item text-center">
+                <a href="{% url 'ventas:lista_ventas' %}" class="btn btn-success btn-lg">Gestión de Ventas</a>
+            </li>
+            <li class="list-group-item text-center">
+                {% if caja_abierta %}
+                <a href="{% url 'caja:detalle_caja' caja_abierta.id %}" class="btn btn-danger btn-lg">Cierre de Caja</a>
+                {% else %}
+                <a href="#" class="btn btn-danger btn-lg disabled">No hay caja abierta</a>
+                {% endif %}
+            </li>
+            <li class="list-group-item text-center">
+                <a href="{% url 'productos:lista_productos' %}" class="btn btn-success btn-lg">Gestión de Productos</a>
+            </li>
+            <li class="list-group-item text-center">
+                <a href="{% url 'usuarios:user_list' %}" class="btn btn-primary btn-lg">Gestión de Usuarios</a>
+            </li>
+            <li class="list-group-item text-center">
+                <a href="{% url 'ventas:kitchen_orders' %}" class="btn btn-info btn-lg">Pedidos en Cocina</a>
+            </li>
+            {% endif %}
+
+            {% if request.user.rol == 'CAJERO' %}
+            <!-- Botones visibles para Cajero -->
+            <li class="list-group-item text-center">
+                <a href="{% url 'caja:apertura_caja' %}" class="btn btn-success btn-lg">Apertura de Caja</a>
+            </li>
+            <li class="list-group-item text-center">
+                <a href="{% url 'ventas:lista_ventas' %}" class="btn btn-success btn-lg">Gestión de Ventas</a>
+            </li>
+            <li class="list-group-item text-center">
+                {% if caja_abierta %}
+                <a href="{% url 'caja:detalle_caja' caja_abierta.id %}" class="btn btn-danger btn-lg">Cierre de Caja</a>
+                {% else %}
+                <a href="#" class="btn btn-danger btn-lg disabled">No hay caja abierta</a>
+                {% endif %}
+            </li>
+            {% endif %}
+
+            {% if request.user.rol == 'COCINERO' %}
+            <li class="list-group-item text-center">
+                <a href="{% url 'ventas:kitchen_orders' %}" class="btn btn-info btn-lg">Pedidos en Cocina</a>
+            </li>
+            {% endif %}
+
+            {% if request.user.rol == 'CLIENTE' %}
+            <li class="list-group-item text-center">
+                <!-- Aquí puedes añadir botones específicos para CLIENTE si es necesario -->
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

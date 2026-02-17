@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Asignar Rol a Usuarios</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="usuario">Seleccionar usuario:</label>
+    <select name="usuario_id">
+        {% for usuario in usuarios %}
+        <option value="{{ usuario.id }}">{{ usuario.username }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="rol">Seleccionar rol:</label>
+    <select name="rol">
+        {% for grupo in grupos %}
+        <option value="{{ grupo.name }}">{{ grupo.name }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Asignar Rol</button>
+</form>
+{% endblock %}

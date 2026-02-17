@@ -1,0 +1,5 @@
+Cliente: poncho
+Fecha: 2025-02-24 22:45
+Productos:
+hamburguesa completa x 1
+Total: 9000.00

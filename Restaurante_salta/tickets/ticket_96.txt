@@ -1,0 +1,6 @@
+Cliente: el maistro
+Fecha: 2025-02-24 19:09
+Productos:
+hamburguesa completa x 1
+7up x 10
+Total: 29000.00

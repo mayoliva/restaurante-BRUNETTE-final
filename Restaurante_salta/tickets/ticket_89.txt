@@ -1,0 +1,5 @@
+Cliente: ivan
+Fecha: 2025-02-23 22:35
+Productos:
+hamburguesa completa x 1
+Total: 9000.00

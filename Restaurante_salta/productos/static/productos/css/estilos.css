@@ -1,0 +1,75 @@
+body {
+    background-color: #f8f9fa;
+    /* Fondo gris claro */
+    color: #212529;
+    /* Color de texto predeterminado */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    color: #343a40;
+    /* Gris oscuro */
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+.btn-link {
+    color: #6c757d;
+}
+
+.btn-link:hover {
+    color: #5a6268;
+    text-decoration: none;
+}
+
+/* Enfoque en campos de entrada al seleccionarlos */
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: none;
+}
+
+/* Ajuste del campo de descripción para que sea del mismo tamaño que otros campos */
+textarea.form-control {
+    height: calc(1.5em + .75rem + 2px);
+    /* Altura similar a la de los inputs */
+    padding-top: .375rem;
+    padding-bottom: .375rem;
+}
+
+/* Fondo gris muy claro para el formulario */
+#formulario-contenedor {
+    background-color: #e9ecef;
+    /* Gris muy claro */
+    border-radius: .5rem;
+    padding: 20px;
+}
+
+/* Ajustar imagen */
+.imagen-ajustada {
+    max-width: 100px;
+    /* Ajusta el tamaño máximo de la imagen */
+    margin: 0 auto;
+    /* Centra la imagen */
+}
+
+/* Mover contenido hacia arriba */
+.contenido-centrado {
+    margin-top: 1rem;
+    /* Reducir el margen superior para mover el contenido hacia arriba */
+}

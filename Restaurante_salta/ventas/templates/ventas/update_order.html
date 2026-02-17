@@ -1,0 +1,6 @@
+<h2>Actualizar Estado del Pedido</h2>
+<p>Pedido de {{ order.customer_name }}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Marcar como Completado</button>
+</form>

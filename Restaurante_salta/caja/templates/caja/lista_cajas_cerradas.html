@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Cajas</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+    </nav>
+    <div class="container mt-5 pt-5">
+        <h1 class="display-4 text-center mb-4">Historial de Cajas</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Fecha de Cierre</th>
+                        <th scope="col">Hora de Cierre</th>
+                        <th scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for caja in cajas_cerradas %}
+                    <tr class="text-center">
+                        <td>{{ caja.usuario.username }}</td>
+                        <td>{{ caja.fecha_cierre|date:"d/m/Y" }}</td>
+                        <td>{{ caja.fecha_cierre|date:"H:i:s" }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{% url 'caja:detalle_caja' caja.id %}" class="btn btn-info btn-sm">Ver
+                                    Arqueo</a>
+                                <a href="{% url 'ventas:lista_ventas_por_caja' caja.id %}"
+                                    class="btn btn-secondary btn-sm">Ver Ventas</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Scripts de JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

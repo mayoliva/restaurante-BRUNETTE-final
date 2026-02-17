@@ -1,0 +1,50 @@
+{% extends 'usuarios/base.html' %}
+
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center mt-5">
+    <div class="col-md-6"> <!-- Hacemos el formulario más pequeño -->
+        <!-- Imagen arriba del formulario y tamaño reducido -->
+        <div class="text-center mb-4">
+            <img src="{% static 'img/logo.png' %}" alt="Imagen personalizada" class="img-fluid"
+                style="max-width: 150px;">
+        </div>
+
+        <h2 class="text-center mb-4">Editar Usuario</h2> <!-- Título centrado -->
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Nombre de usuario</label>
+                {{ form.username|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Correo electrónico</label>
+                {{ form.email|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                <label for="id_first_name" class="form-label">Nombre</label>
+                {{ form.first_name|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                <label for="id_last_name" class="form-label">Apellido</label>
+                {{ form.last_name|add_class:"form-control" }}
+            </div>
+            <div class="mb-3">
+                <label for="id_rol" class="form-label">Rol</label>
+                {{ form.rol|add_class:"form-control" }}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Guardar</button>
+            <div class="mt-3 text-center">
+                <a href="{% url 'usuarios:user_list' %}">Volver a la lista de usuarios</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

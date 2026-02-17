@@ -1,0 +1,6 @@
+Cliente: santino
+Fecha: 2025-02-27 02:57
+Productos:
+Milanesa Napolitana x 1
+sprite x 1
+Total: 20500.00

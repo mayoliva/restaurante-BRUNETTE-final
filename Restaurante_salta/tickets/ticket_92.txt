@@ -1,0 +1,5 @@
+Cliente: santi
+Fecha: 2025-02-24 19:05
+Productos:
+hamburguesa completa x 1
+Total: 9000.00

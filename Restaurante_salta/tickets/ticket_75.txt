@@ -1,0 +1,7 @@
+Cliente: ivan
+Fecha: 2025-02-23 19:55
+Productos:
+sprite x 1
+hamburguesa completa x 1
+7up x 1
+Total: 13500.00

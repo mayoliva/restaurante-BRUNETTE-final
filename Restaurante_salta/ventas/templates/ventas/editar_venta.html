@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Venta</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'productos/css/estilos.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+    </nav>
+    <div class="container mt-3">
+        <h2 class="text-center mb-3">Editar Venta</h2>
+        {% if messages %}
+        <div class="alert alert-info" role="alert">
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="producto">Producto:</label>
+                <select name="producto" id="producto" class="form-control form-control-sm">
+                    {% for producto in productos %}
+                    <option value="{{ producto.id }}">{{ producto.nombre }} (Stock: {{ producto.stock }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad" min="1" value="1"
+                    class="form-control form-control-sm">
+            </div>
+            <button type="submit" name="añadir_al_carrito" class="btn btn-primary btn-sm">Añadir al Carrito</button>
+        </form>
+
+        <h3>Carrito</h3>
+        <ul class="list-group mb-3">
+            {% for producto_id, detalles in carrito.items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ detalles.nombre }} x {{ detalles.cantidad }} - ${{ detalles.precio|floatformat:2 }} x {{
+                    detalles.cantidad }} = ${{ detalles.total|floatformat:2 }}</span>
+                <form method="post" class="ml-2">
+                    {% csrf_token %}
+                    <input type="hidden" name="producto_id" value="{{ producto_id }}">
+                    <button type="submit" name="borrar_producto" class="btn btn-danger btn-sm">Borrar</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total Carrito: ${{ total_carrito|floatformat:2 }}</strong></p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="metodo_pago">Método de Pago:</label>
+                <select name="metodo_pago" id="metodo_pago" class="form-control form-control-sm">
+                    <option value="efectivo" {% if efectivo_selected %}selected{% endif %}>Efectivo</option>
+                    <option value="transferencia" {% if transferencia_selected %}selected{% endif %}>Transferencia
+                    </option>
+                </select>
+            </div>
+            <button type="submit" name="actualizar_venta" class="btn btn-success btn-sm">Actualizar Venta</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

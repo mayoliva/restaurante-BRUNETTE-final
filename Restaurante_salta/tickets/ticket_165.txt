@@ -1,0 +1,6 @@
+Cliente: jorge
+Fecha: 2025-03-19 13:54
+Productos:
+Milanesa Napolitana x 1
+sprite x 1
+Total: 20500.00

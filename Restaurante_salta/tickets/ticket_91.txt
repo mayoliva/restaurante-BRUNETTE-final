@@ -1,0 +1,5 @@
+Cliente: pepe argento
+Fecha: 2025-02-24 18:56
+Productos:
+sprite x 7
+Total: 17500.00

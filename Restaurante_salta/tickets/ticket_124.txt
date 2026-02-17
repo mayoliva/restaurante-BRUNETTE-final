@@ -1,0 +1,6 @@
+Cliente: pepe
+Fecha: 2025-02-27 17:19
+Productos:
+sprite x 2
+sanwi de mila x 1
+Total: 7000.00

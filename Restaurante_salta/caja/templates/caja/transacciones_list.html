@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Transacciones</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .btn-yellow {
+            background-color: #ffc107;
+            color: #000;
+            border-color: #ffc107;
+        }
+
+        .btn-yellow:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #e27917;">
+        <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}">BRUNETTE</a>
+    </nav>
+    <div class="container mt-5 pt-5">
+        <h1 class="display-4 text-center mb-4">Lista de Transacciones</h1>
+        <!-- Botones de Estadísticas e Historial centrados y con ancho automático -->
+        <div class="mb-4 text-center">
+            <a href="{% url 'ventas:estadisticas' %}" class="btn btn-primary btn-sm mx-1"
+                style="width: auto;">Estadísticas</a>
+            <a href="{% url 'caja:lista_cajas_cerradas' %}" class="btn btn-yellow btn-sm mx-1"
+                style="width: auto;">Historial</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Tipo de Transacción</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaccion in transacciones %}
+                    <tr>
+                        <td>{{ transaccion.user.username }}</td>
+                        <td>{{ transaccion.created_at|date:"d/m/Y" }}</td>
+                        <td>{{ transaccion.created_at|date:"H:i:s" }}</td>
+                        <td>{{ transaccion.transaction_type }}</td>
+                        <td>${{ transaccion.amount }}</td>
+                        <td>
+                            <a href="{% url 'caja:detalle_transaccion' transaccion.id %}"
+                                class="btn btn-info btn-sm">Ver Detalle</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Scripts de JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

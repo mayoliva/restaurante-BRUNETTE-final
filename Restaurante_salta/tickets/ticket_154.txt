@@ -1,0 +1,7 @@
+Cliente: pepe
+Fecha: 2025-02-28 18:08
+Productos:
+Milanesa Napolitana x 1
+sprite x 1
+sanwi de mila x 1
+Total: 22500.00

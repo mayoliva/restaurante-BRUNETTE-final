@@ -1,0 +1,5 @@
+Cliente: sergei
+Fecha: 2025-02-24 23:13
+Productos:
+hamburguesa completa x 1
+Total: 9000.00

@@ -1,0 +1,5 @@
+Cliente: gonzalo
+Fecha: 2025-02-27 23:28
+Productos:
+sprite x 1
+Total: 2500.00

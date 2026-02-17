@@ -1,0 +1,58 @@
+{% extends "usuarios/base.html" %}
+
+{% block title %}Lista de Usuarios{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #e27917; padding-left: 1rem;">
+    <a class="navbar-brand" href="{% url 'usuarios:menu_principal' %}" style="font-size: 1.25rem;">BRUNETTE</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container mt-5 pt-5">
+    <h2 class="mb-4 text-center">Lista de Usuarios</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{% url 'usuarios:registro' %}" class="btn btn-primary btn-custom">Crear Usuario</a>
+    </div>
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Usuario</th>
+                <th>Nombre Completo</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.get_full_name }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.get_rol_display }}</td>
+                <td class="d-flex justify-content-center align-items-center">
+                    <a href="{% url 'usuarios:edit_user' usuario.id %}"
+                        class="btn btn-warning btn-sm btn-custom mr-1">Editar</a>
+                    {% if usuario.is_active %}
+                    <form action="{% url 'usuarios:delete_user' usuario.id %}" method="post" class="d-inline"
+                        onsubmit="return confirm('¿Estás seguro de que deseas inactivar este usuario?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm btn-custom">Inactivar</button>
+                    </form>
+                    {% else %}
+                    <form action="{% url 'usuarios:activar_usuario' usuario.id %}" method="post" class="d-inline"
+                        onsubmit="return confirm('¿Estás seguro de que deseas activar este usuario?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-sm btn-custom">Activar</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+{% endblock %}

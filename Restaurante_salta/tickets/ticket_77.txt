@@ -1,0 +1,5 @@
+Cliente: ivan
+Fecha: 2025-02-23 20:25
+Productos:
+sprite x 1
+Total: 2500.00

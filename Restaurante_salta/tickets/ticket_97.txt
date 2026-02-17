@@ -1,0 +1,6 @@
+Cliente: pepito
+Fecha: 2025-02-24 20:22
+Productos:
+hamburguesa completa x 1
+7up x 1
+Total: 11000.00
